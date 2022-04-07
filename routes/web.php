@@ -14,5 +14,12 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('index');
 });
+
+Route::get('/activity', function () {
+    return view('activities');
+});
+
+Route::get('/activity','App\Http\Controllers\ActivitiesController@index');
+Route::post('/add_act','App\Http\Controllers\ActivitiesController@store');
