@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Activities;
+use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -13,12 +14,15 @@ class ActivitiesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $acts = DB::table('activities')->get();
         $counter = DB::table('activities')
-            ->select('company.id AS comid','job.id','job.nama_job','job.keahlian','company.name',Str::title('user.kota'))
-            ->get();
+            ->select(DB::raw('SUM(waktu * rating) AS point'))
+            ->first();
+
+
+        $request->session()->put('point', $counter->point);
         return view('activities',['acts'=>$acts]);
     }
 
@@ -40,10 +44,14 @@ class ActivitiesController extends Controller
      */
     public function store(Request $request)
     {
+        $dt = new DateTime();
+        echo $dt->format('d m Y');
+
         $activity = new Activities;
         $activity->aktivitas = $request->act;
         $activity->rating = $request->rating;
         $activity->waktu = $request->time;
+        $activity->tanggal = $dt;
         $activity->save();
 
         $request->session()->flash('alert-success', 'Aktivitas berhasil ditambahkan!');

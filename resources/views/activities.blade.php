@@ -37,6 +37,7 @@
 </div>
 
 <div class="table-responsive m-3">
+    <h1>Total Point: {{ Session::get('point') }}</h1>
     <br>
     <table class="table table-bordered table-striped table-hover table-sm bg-light">
         <thead>
@@ -44,6 +45,7 @@
             <th scope="col">Aktivitas</th>
             <th scope="col">Waktu</th>
             <th scope="col">Rating</th>
+            <th scope="col">Tanggal</th>
         </tr>
         </thead>
         <tbody id="myTable">
@@ -53,6 +55,7 @@
                     <td>{{ $data->aktivitas }}</td>
                     <td>{{ $data->waktu }}</td>
                     <td>{{ $data->rating }}</td>
+                    <td>{{ date('d F Y', strtotime($data->tanggal)) }}</td>
                 </tr>
             @endforeach
         @elseif($acts->count()==0)
