@@ -21,6 +21,21 @@ class ActivitiesController extends Controller
             ->select(DB::raw('SUM(waktu * rating) AS point'))
             ->first();
 
+        if($counter->point<1000){
+            $request->session()->put('quote', "You're just started, let's go!");
+        }else if($counter->point<2000){
+            $request->session()->put('quote', "Not bad, for a newbie!");
+        }else if($counter->point<4000){
+            $request->session()->put('quote', "Nice, keep it up!");
+        }else if($counter->point<8000){
+            $request->session()->put('quote', "You're pretty good, don't get cocky though!");
+        }else if($counter->point<16000){
+            $request->session()->put('quote', "Great job, I respect you!");
+        }else if($counter->point<32000){
+            $request->session()->put('quote', "Excellent, your highness!");
+        }else if($counter->point>=100000){
+            $request->session()->put('quote', "You're a God!");
+        }
 
         $request->session()->put('point', $counter->point);
         return view('activities',['acts'=>$acts]);
@@ -54,7 +69,7 @@ class ActivitiesController extends Controller
         $activity->tanggal = $dt;
         $activity->save();
 
-        $request->session()->flash('alert-success', 'Aktivitas berhasil ditambahkan!');
+        $request->session()->flash('alert-success', 'You succesfully add the activity!');
 
         return redirect('/activity');
     }

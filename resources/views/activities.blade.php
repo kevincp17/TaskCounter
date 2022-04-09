@@ -18,10 +18,10 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="{{ url('/') }}">Beranda</a>
+                    <a class="nav-link active" aria-current="page" href="{{ url('/') }}">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ url('/activity') }}">Aktivitas</a>
+                    <a class="nav-link" href="{{ url('/activity') }}">Activity</a>
                 </li>
             </ul>
         </div>
@@ -37,15 +37,16 @@
 </div>
 
 <div class="table-responsive m-3">
+    <h1>{{ Session::get('quote') }}</h1>
     <h1>Total Point: {{ Session::get('point') }}</h1>
     <br>
     <table class="table table-bordered table-striped table-hover table-sm bg-light">
         <thead>
         <tr>
-            <th scope="col">Aktivitas</th>
-            <th scope="col">Waktu</th>
+            <th scope="col">Activity</th>
+            <th scope="col">Time(Minute)</th>
             <th scope="col">Rating</th>
-            <th scope="col">Tanggal</th>
+            <th scope="col">Date</th>
         </tr>
         </thead>
         <tbody id="myTable">
@@ -60,7 +61,7 @@
             @endforeach
         @elseif($acts->count()==0)
             <tr>
-                <td colspan="7"><h3 class="text-center text-danger">Data aktivitas masih belum ada</h3></td>
+                <td colspan="7"><h3 class="text-center text-danger">No Activity Data Found</h3></td>
             </tr>
         @endif
         </tbody>
