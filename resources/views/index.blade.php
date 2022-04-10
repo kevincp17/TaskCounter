@@ -8,15 +8,33 @@
         #center {
             position: absolute;
             left: 50%;
-            top: 50%;
+            top: 65%;
             transform: translate(-50%, -50%);
             border: 5px solid #FFFF00;
             padding: 10px;
         }
+
+        .list {
+            max-width: 550px;
+            padding: 20px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.4;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        ul li.marker::marker {
+            content: "\2714\0020  ";
+            color: #4ac1bb;
+            font-size: 1.5em;
+        }
     </style>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -28,28 +46,57 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="{{ url('/') }}">Home</a>
+                        <a class="nav-link active" aria-current="page" href="{{ url('/') }}"><i class="fas fa-kiwi-bird"></i>Home</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{ url('/activity') }}">Activity</a>
                     </li>
-
                 </ul>
             </div>
         </div>
     </nav>
 
+    <div class="list">
+        <h1>What Task Counter Can Do</h1>
+        <ul>
+            <li class="marker">
+                <strong>Put any activities you want</strong>
+            </li>
+            <li class="marker">
+                <strong>Get a point based on your activities, time and performance</strong>
+            </li>
+            <li class="marker">
+                <strong>Motivates you to be more productive</strong>
+            </li>
+        </ul>
+    </div>
+
 <div id="center" class="p-3 border m-2 bg-light rounded">
     <form class="m-3" action="{{url('/add_act')}}" method="post" class="col-lg-6 offset-lg-3" enctype="multipart/form-data">
         {{ csrf_field() }}
         <div class="mb-3">
-            <label class="form-label">Activity Name</label>
-            <input type="text" class="form-control" name="act">
+            <input type="text" class="form-control" name="act" placeholder="Activity Name">
+        </div>
+
+        <div class="input-group mb-3">
+            <label class="input-group-text" for="inputGroupSelect01">Activity Type</label>
+            <select class="form-select" id="inputGroupSelect01" name="actType">
+                <option selected>Type of Activity</option>
+                <option value="Art">Art</option>
+                <option value="Career">Career</option>
+                <option value="Sport & Health">Sport & Health</option>
+                <option value="Cooking">Cooking</option>
+                <option value="Hobby">Hobby</option>
+                <option value="House Chore">House Chore</option>
+                <option value="Social">Social</option>
+                <option value="Reading & Learning">Reading & Learning</option>
+                <option value="Traveling">Traveling</option>
+                <option value="Other">Other</option>
+            </select>
         </div>
 
         <div class="mb-3">
-            <label class="form-label">Time(Minute)</label>
-            <input type="text" class="form-control" name="time">
+            <input type="text" class="form-control" name="time" placeholder="Time(Minute)">
         </div>
 
         <div class="mb-3">
@@ -79,7 +126,10 @@
                 <label class="form-check-label">5</label>
             </div>
         </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
+
+        <div class="d-grid gap-2">
+            <button type="submit" class="btn btn-primary">Add Activity</button>
+        </div>
     </form>
 </div>
 

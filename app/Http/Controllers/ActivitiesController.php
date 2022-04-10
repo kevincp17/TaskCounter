@@ -17,27 +17,46 @@ class ActivitiesController extends Controller
     public function index(Request $request)
     {
         $acts = DB::table('activities')->get();
+
         $counter = DB::table('activities')
-            ->select(DB::raw('SUM(waktu * rating) AS point'))
+            ->select(DB::raw('SUM(time * rating) AS point'))
             ->first();
 
-        if($counter->point<1000){
+        $bonus_career= DB::table('activities')
+            ->select(DB::raw('COUNT(type)*25 AS point'))
+            ->where('type', "Career")
+            ->first();
+
+        $bonus_else= DB::table('activities')
+            ->select(DB::raw('COUNT(type)*15 AS point'))
+            ->where('type','!=',"Career")
+            ->where('type','!=',"Other")
+            ->first();
+
+        $bonus_other= DB::table('activities')
+            ->select(DB::raw('COUNT(type)*5 AS point'))
+            ->where('type', "Other")
+            ->first();
+
+        $allPoints=$counter->point+$bonus_career->point+$bonus_else->point+$bonus_other->point;
+
+        if($allPoints<1000){
             $request->session()->put('quote', "You're just started, let's go!");
-        }else if($counter->point<2000){
+        }else if($allPoints<2000){
             $request->session()->put('quote', "Not bad, for a newbie!");
-        }else if($counter->point<4000){
+        }else if($allPoints<4000){
             $request->session()->put('quote', "Nice, keep it up!");
-        }else if($counter->point<8000){
+        }else if($allPoints<8000){
             $request->session()->put('quote', "You're pretty good, don't get cocky though!");
-        }else if($counter->point<16000){
-            $request->session()->put('quote', "Great job, I respect you!");
-        }else if($counter->point<32000){
+        }else if($allPoints<16000){
+            $request->session()->put('quote', "Great job, what a chad!");
+        }else if($allPoints<32000){
             $request->session()->put('quote', "Excellent, your highness!");
-        }else if($counter->point>=100000){
+        }else if($allPoints>=100000){
             $request->session()->put('quote', "You're a God!");
         }
 
-        $request->session()->put('point', $counter->point);
+        $request->session()->put('point', $allPoints);
         return view('activities',['acts'=>$acts]);
     }
 
@@ -63,10 +82,11 @@ class ActivitiesController extends Controller
         echo $dt->format('d m Y');
 
         $activity = new Activities;
-        $activity->aktivitas = $request->act;
+        $activity->activity = $request->act;
+        $activity->type = $request->actType;
         $activity->rating = $request->rating;
-        $activity->waktu = $request->time;
-        $activity->tanggal = $dt;
+        $activity->time = $request->time;
+        $activity->date = $dt;
         $activity->save();
 
         $request->session()->flash('alert-success', 'You succesfully add the activity!');

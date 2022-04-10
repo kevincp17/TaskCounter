@@ -44,6 +44,7 @@
         <thead>
         <tr>
             <th scope="col">Activity</th>
+            <th scope="col">Activity Type</th>
             <th scope="col">Time(Minute)</th>
             <th scope="col">Rating</th>
             <th scope="col">Date</th>
@@ -53,10 +54,11 @@
         @if($acts->count()>0)
             @foreach($acts as $data)
                 <tr>
-                    <td>{{ $data->aktivitas }}</td>
-                    <td>{{ $data->waktu }}</td>
+                    <td>{{ $data->activity }}</td>
+                    <td>{{ $data->type }}</td>
+                    <td>{{ $data->time }}</td>
                     <td>{{ $data->rating }}</td>
-                    <td>{{ date('d F Y', strtotime($data->tanggal)) }}</td>
+                    <td>{{ date('d F Y', strtotime($data->date)) }}</td>
                 </tr>
             @endforeach
         @elseif($acts->count()==0)
