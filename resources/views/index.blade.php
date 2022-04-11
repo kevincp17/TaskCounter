@@ -34,8 +34,7 @@
     </style>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-</head>
+    <script src="https://kit.fontawesome.com/ab2913ae0d.js" crossorigin="anonymous"></script></head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid">
@@ -46,10 +45,10 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="{{ url('/') }}"><i class="fas fa-kiwi-bird"></i>Home</a>
+                        <a class="nav-link" aria-current="page" href="{{ url('/') }}"><i class="fa-solid fa-house-chimney"></i>Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ url('/activity') }}">Activity</a>
+                        <a class="nav-link" href="{{ url('/activity') }}"><i class="fa-solid fa-list"></i>Activity</a>
                     </li>
                 </ul>
             </div>
@@ -90,7 +89,7 @@
                 <option value="House Chore">House Chore</option>
                 <option value="Social">Social</option>
                 <option value="Reading & Learning">Reading & Learning</option>
-                <option value="Traveling">Traveling</option>
+                <option value="Traveling">Travelling</option>
                 <option value="Other">Other</option>
             </select>
         </div>
@@ -100,35 +99,38 @@
         </div>
 
         <div class="mb-3">
-            <label for="exampleInputPassword1" class="form-label">Rating</label>
+            <label for="exampleInputPassword1" class="form-label"><b>How do you feel about this activity?</b></label>
+        </div>
+
+        <div class="mb-3">
             <div class="form-check form-check-inline">
                 <input class="form-check-input" type="radio" name="rating" value=1>
-                <label class="form-check-label">1</label>
+                <i class="fa-regular fa-face-angry fa-2xl"></i>
             </div>
 
             <div class="form-check form-check-inline">
                 <input class="form-check-input" type="radio" name="rating" value=2>
-                <label class="form-check-label">2</label>
+                <i class="fa-regular fa-face-frown fa-2xl"></i>
             </div>
 
             <div class="form-check form-check-inline">
                 <input class="form-check-input" type="radio" name="rating" value=3>
-                <label class="form-check-label">3</label>
+                <i class="fa-regular fa-face-meh fa-2xl"></i>
             </div>
 
             <div class="form-check form-check-inline">
                 <input class="form-check-input" type="radio" name="rating" value=4>
-                <label class="form-check-label">4</label>
+                <i class="fa-regular fa-face-smile fa-2xl"></i>
             </div>
 
             <div class="form-check form-check-inline">
                 <input class="form-check-input" type="radio" name="rating" value=5>
-                <label class="form-check-label">5</label>
+                <i class="fa-regular fa-face-laugh-beam fa-2xl"></i>
             </div>
         </div>
 
         <div class="d-grid gap-2">
-            <button type="submit" class="btn btn-primary">Add Activity</button>
+            <button type="submit" class="btn btn-primary"><i class="fa-solid fa-paper-plane"></i>Add Activity</button>
         </div>
     </form>
 </div>

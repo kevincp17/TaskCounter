@@ -16,7 +16,7 @@ class ActivitiesController extends Controller
      */
     public function index(Request $request)
     {
-        $acts = DB::table('activities')->get();
+        $acts = DB::table('activities')->orderBy('id')->cursorPaginate(10);
 
         $counter = DB::table('activities')
             ->select(DB::raw('SUM(time * rating) AS point'))
