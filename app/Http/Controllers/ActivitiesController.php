@@ -12,31 +12,52 @@ class ActivitiesController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function index(Request $request)
     {
-        $acts = DB::table('activities')->orderBy('id')->cursorPaginate(10);
+//        query builder
+//        $acts = DB::table('activities')->orderBy('id')->cursorPaginate(10);
 
-        $counter = DB::table('activities')
-            ->select(DB::raw('SUM(time * rating) AS point'))
-            ->first();
+//        eloquent
+        $acts=Activities::paginate(10);
 
-        $bonus_career= DB::table('activities')
-            ->select(DB::raw('COUNT(type)*25 AS point'))
-            ->where('type', "Career")
-            ->first();
+//        query builder
+//        $counter = DB::table('activities')
+//            ->select(DB::raw('SUM(time * rating) AS point'))
+//            ->first();
 
-        $bonus_else= DB::table('activities')
-            ->select(DB::raw('COUNT(type)*15 AS point'))
-            ->where('type','!=',"Career")
-            ->where('type','!=',"Other")
-            ->first();
+//        eloquent
+        $counter = Activities::selectRaw('sum(time*rating) AS point')->first();
 
-        $bonus_other= DB::table('activities')
-            ->select(DB::raw('COUNT(type)*5 AS point'))
-            ->where('type', "Other")
-            ->first();
+//        query builder
+//        $bonus_career= DB::table('activities')
+//            ->select(DB::raw('COUNT(type)*25 AS point'))
+//            ->where('type', "Career")
+//            ->first();
+
+//        eloquent
+        $bonus_career= Activities::selectRaw('count(type)*25 AS point')->where('type', "Career")->first();
+
+        //        query builder
+//        $bonus_else= DB::table('activities')
+//            ->select(DB::raw('COUNT(type)*15 AS point'))
+//            ->where('type','!=',"Career")
+//            ->where('type','!=',"Other")
+//            ->first();
+
+        //        eloquent
+        $bonus_else= Activities::selectRaw('count(type)*15 AS point')->where('type','!=', "Career")->where('type','!=',"Other")->first();
+
+//        query builder
+//        $bonus_other= DB::table('activities')
+//            ->select(DB::raw('COUNT(type)*5 AS point'))
+//            ->where('type', "Other")
+//            ->first();
+
+        //        eloquent
+        $bonus_other= Activities::selectRaw('count(type)*5 AS point')->where('type', "Other")->first();
+
 
         $allPoints=$counter->point+$bonus_career->point+$bonus_else->point+$bonus_other->point;
 
@@ -58,6 +79,8 @@ class ActivitiesController extends Controller
 
         $request->session()->put('point', $allPoints);
         return view('activities',['acts'=>$acts]);
+
+
     }
 
     /**

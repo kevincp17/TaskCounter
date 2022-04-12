@@ -21,5 +21,5 @@ Route::get('/activity', function () {
     return view('activities');
 });
 
-Route::get('/activity','App\Http\Controllers\ActivitiesController@index');
+Route::get('/activity','App\Http\Controllers\ActivitiesController@index')->name('activity_list');
 Route::post('/add_act','App\Http\Controllers\ActivitiesController@store');
